@@ -13,6 +13,14 @@ function getBooksBorrowedCount(books) {
   return borrowed;
 } 
 
+function createGenreArray(genres) {
+  let genreArray = Object.keys(genres).map((genre) => {
+    return { name: genre, count: genres[genre] };
+  });
+  genreArray.sort((a, b) => b.count - a.count);
+  return genreArray.slice(0, 5);
+}
+
   function getMostCommonGenres(books) {
   let genres = {};
   for (let book of books) {
@@ -24,12 +32,10 @@ function getBooksBorrowedCount(books) {
       genres[genre] = 1;
     }
   }
-  let genreArray = Object.keys(genres).map((genre) => {
-    return { name: genre, count: genres[genre] };
-  });
-  genreArray.sort((a, b) => b.count - a.count);
-  return genreArray.slice(0, 5);
+  return createGenreArray(genres);
 }
+
+
 
 function getMostPopularBooks(books) {
   let sortedBooks = books.sort((a, b) => b.borrows.length - a.borrows.length);
